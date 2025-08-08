@@ -5,6 +5,20 @@ import os
 import gspread
 from google.oauth2.service_account import Credentials
 
+# --- Función para traducir meses de español a inglés ---
+def traducir_mes(fecha_str):
+    traducciones = {
+        "enero": "January", "febrero": "February", "marzo": "March",
+        "abril": "April", "mayo": "May", "junio": "June",
+        "julio": "July", "agosto": "August", "septiembre": "September",
+        "octubre": "October", "noviembre": "November", "diciembre": "December"
+    }
+    for esp, eng in traducciones.items():
+        fecha_str = fecha_str.replace(esp, eng)
+    return fecha_str
+
+
+
 def enviar_a_google_sheets(resultado):
     scope = ["https://www.googleapis.com/auth/spreadsheets"]
     creds_dict = {
@@ -101,7 +115,8 @@ else:
     def respuesta_correcta(p):
         monto = p["monto"]
         tipo = p["seguro"]
-        fecha = datetime.strptime(p["fecha"], "%d %B %Y")
+        fecha = datetime.strptime(traducir_mes(p["fecha"]), "%d %B %Y")
+
         r1 = (tipo in ["Incendios", "Accidentes"] and
               150000 <= monto <= 450000 and
               datetime(1975, 3, 15) <= fecha <= datetime(1976, 5, 10))
