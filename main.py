@@ -3,6 +3,38 @@ import pandas as pd
 from datetime import datetime
 import os
 import locale
+import gspread
+from google.oauth2.service_account import Credentials
+
+def enviar_a_google_sheets(resultado):
+    scope = ["https://www.googleapis.com/auth/spreadsheets"]
+    creds_dict = {
+        "type": st.secrets["gcp_service_account"]["type"],
+        "project_id": st.secrets["gcp_service_account"]["project_id"],
+        "private_key_id": st.secrets["gcp_service_account"]["private_key_id"],
+        "private_key": st.secrets["gcp_service_account"]["private_key"].replace('\\n', '\n'),
+        "client_email": st.secrets["gcp_service_account"]["client_email"],
+        "client_id": st.secrets["gcp_service_account"]["client_id"],
+        "auth_uri": st.secrets["gcp_service_account"]["auth_uri"],
+        "token_uri": st.secrets["gcp_service_account"]["token_uri"],
+        "auth_provider_x509_cert_url": st.secrets["gcp_service_account"]["auth_provider_x509_cert_url"],
+        "client_x509_cert_url": st.secrets["gcp_service_account"]["client_x509_cert_url"]
+    }
+    credentials = Credentials.from_service_account_info(creds_dict, scopes=scope)
+    gc = gspread.authorize(credentials)
+
+    # Abre la hoja de cálculo
+    sh = gc.open("resultados_test_ic")
+    worksheet = sh.worksheet("Respuestas")
+
+    # Agrega los datos
+    worksheet.append_row([
+        resultado["nombre"],
+        resultado["evaluacion"],
+        resultado["puntaje"],
+        resultado["fecha"],
+        resultado["hora"]
+    ])
 
 # Configurar locale para poder parsear meses en español
 try:
@@ -136,13 +168,8 @@ else:
             "hora": datetime.now().strftime("%H:%M:%S")
         }
 
-        output_file = "resultados_test_ic.csv"
-        df = pd.DataFrame([resultado])
+        enviar_a_google_sheets(resultado)
 
-        if os.path.exists(output_file):
-            df.to_csv(output_file, mode='a', index=False, header=False)
-        else:
-            df.to_csv(output_file, index=False)
 
         st.success(f"¡Gracias {st.session_state.nombre}! Respuestas enviadas correctamente.")
         #st.info(f"Evaluación: **{evaluacion}**, Puntaje estándar: **{puntuacion}**")
