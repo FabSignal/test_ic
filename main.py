@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime
 import os
-import locale
 import gspread
 from google.oauth2.service_account import Credentials
 
@@ -36,11 +35,7 @@ def enviar_a_google_sheets(resultado):
         resultado["hora"]
     ])
 
-# Configurar locale para poder parsear meses en español
-try:
-    locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')  # Linux/macOS
-except:
-    locale.setlocale(locale.LC_TIME, 'Spanish_Spain.1252')  # Windows
+
 
 # Inicializar el nombre en el estado de sesión si no existe
 if "nombre" not in st.session_state:
