@@ -26,31 +26,31 @@ Este proyecto es una aplicación web desarrollada con Streamlit que permite eval
    ```
 
 2. Instala las dependencias:
- ```bash
+    ```bash
 
-pip install -r requirements.txt
+   pip install -r requirements.txt
 
-```
+   ```
 
 3. Ejecutá la app:
 
-```
-streamlit run main.py
+   ```
+   streamlit run main.py
 
-```
+   ```
 
 Asegurate de tener configuradas tus credenciales de Google Sheets (service_account.json) y de compartir la hoja con el correo de servicio.
 
 ## ☁️ Despliegue en Streamlit Cloud
-- Subí este repositorio a GitHub.
+1. Subí este repositorio a GitHub.
 
-- Ingresá a https://streamlit.io/cloud y conectá tu cuenta de GitHub.
+2. Ingresá a https://streamlit.io/cloud y conectá tu cuenta de GitHub.
 
-- Seleccioná el archivo main.py como punto de entrada.
+3. Seleccioná el archivo main.py como punto de entrada.
 
-- Definí las variables de entorno si es necesario (por ejemplo, claves de acceso si usás Google Drive API).
+4. Definí las variables de entorno si es necesario (por ejemplo, claves de acceso si usás Google Drive API).
 
-- Compartí el link público con los estudiantes.
+5. Compartí el link público con los estudiantes.
 
 ## 📁 Estructura del proyecto
 
