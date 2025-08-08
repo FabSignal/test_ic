@@ -59,7 +59,6 @@ test_ic/
 │
 ├── main.py                  # App principal de Streamlit
 ├── requirements.txt         # Librerías necesarias
-├── service_account.json     # Credenciales de Google API (no subir al repo)
 └── README.md
 
 ```
