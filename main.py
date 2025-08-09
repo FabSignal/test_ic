@@ -14,7 +14,11 @@ def enviar_a_google_sheets(resultado):
     )
 
     client = gspread.authorize(creds)
-    sheet = client.open("resultados_test_ic").worksheet("Hoja 1")
+
+    # Usar el ID directamente
+    SPREADSHEET_ID = "1Na_1aUtfol-OV5qEMgsLtCKUQ4DL4cQJz7Qf8Z32TtM"
+    sheet = client.open_by_key(SPREADSHEET_ID).worksheet("Hoja 1")
+
     sheet.append_row([
         resultado["nombre"],
         resultado["evaluacion"],
